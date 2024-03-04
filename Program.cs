@@ -4,7 +4,10 @@ class Program
 {
     static void Main(string[] args)
     {
-        Console.WriteLine("Hello, World!");
+        var observable = new EventBasedObservable();
+        var observer = new EventBasedObserver(observable);
+
+        observable.FireEvent("Hello, World!");
     }
 }
 
@@ -26,3 +29,14 @@ public class EventBasedObservable
     }
 }
 
+public class EventBasedObserver
+{
+    public EventBasedObserver(EventBasedObservable observable)
+    {
+        observable.Event += OnEvent;
+    }
+    public void OnEvent(object? sender, MessageEventArgs e)
+    {
+        Console.WriteLine($"Event fired: {e.Message}");
+    }
+}
